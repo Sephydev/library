@@ -19,6 +19,10 @@ function Book({ title, author, publicationDate, numOfPage, isRead, synopsis }) {
   this.id = crypto.randomUUID();
 }
 
+Book.prototype.modifyIsRead = function () {
+  this.isRead = !this.isRead;
+}
+
 function addBookToLibrary(book) {
   const newBook = new Book(book);
   myLibrary.push(newBook);
@@ -76,10 +80,13 @@ function displayBooks( ) {
     const synopsis = document.createElement('p');
     synopsis.textContent = book.synopsis;
 
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
+
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     
-    deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.addEventListener("click", () => {
         const indexOfElem = myLibrary.findIndex(bookOfLibrary => bookOfLibrary.id === book.id);
         myLibrary.splice(indexOfElem, 1);
 
@@ -87,10 +94,23 @@ function displayBooks( ) {
         displayBooks();
     })
 
+    const isReadBtn = document.createElement("button");
+    isReadBtn.textContent = book.isRead ? "Didn't read" : "Is read";
+
+    isReadBtn.addEventListener("click", () => {
+      book.modifyIsRead();
+
+      removeBooksDisplayed();
+      displayBooks();
+    })
+
+    btnContainer.appendChild(deleteBtn);
+    btnContainer.appendChild(isReadBtn);
+
     card.appendChild(title);
     card.appendChild(info);
     card.appendChild(synopsis);
-    card.appendChild(deleteBtn);
+    card.appendChild(btnContainer);
 
     container.appendChild(card);
   })
