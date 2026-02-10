@@ -55,7 +55,13 @@ for (let book of testBooks) {
   addBookToLibrary(book);
 }
 
-function displayBooks() {
+function removeBooksDisplayed() {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild)
+  }
+}
+
+function displayBooks( ) {
   myLibrary.forEach(book => {
     const card = document.createElement('div');
     card.classList.add("card")
@@ -74,8 +80,11 @@ function displayBooks() {
     deleteBtn.textContent = "Delete";
     
     deleteBtn.addEventListener("click", (e) => {
-        const cardToRemove = document.querySelector(`[data-id='${book.id}']`);
-        cardToRemove.remove();
+        const indexOfElem = myLibrary.findIndex(bookOfLibrary => bookOfLibrary.id === book.id);
+        myLibrary.splice(indexOfElem, 1);
+
+        removeBooksDisplayed();
+        displayBooks();
     })
 
     card.appendChild(title);
@@ -105,9 +114,7 @@ addBookForm.addEventListener("submit", (e) => {
     newBook[key] = value;
   }
 
-  while (container.firstChild) {
-    container.removeChild(container.firstChild)
-  }
+  removeBooksDisplayed();
 
   addBookToLibrary(newBook);
   displayBooks();
