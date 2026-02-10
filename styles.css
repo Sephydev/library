@@ -1,9 +1,11 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  :not(dialog) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 body {
@@ -18,12 +20,14 @@ body {
   padding: 5rem 0;
   background-color: #1e2330;
   color: #e8e8e8;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 95%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(45ch, 1fr));
   gap: 2rem;
 }
 
@@ -46,4 +50,108 @@ body {
 .card:hover {
   transform: translateY(-10px);
   color: #ffb800;
+}
+
+dialog {
+  border: none;
+  border-radius: 15px;
+  background-color: #252b3b;
+  color: #e8e8e8;
+  box-shadow: 3px 3px 5px #00d4ff;
+}
+
+dialog::backdrop {
+  background: #000;
+  opacity: 0.5;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+form div:not(div:nth-child(5)) {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+form div:nth-child(5) {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+button {
+  background-color: #00d4ff;
+  border: none;
+  font-size: 1rem;
+  padding: .75rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #ffb800;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+button:active {
+  background-color: #ff6b35;
+}
+
+input:not(input[type="checkbox"]),
+textarea {
+  background-color: #394157;
+  border: 1px solid #394157;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #e8e8e8;
+  padding: .4rem 1rem;
+  transition: all .2s ease-in-out;
+  width: 70ch;
+}
+
+input:hover,
+textarea:hover {
+  border: 1px solid #ffb800;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #ff6b35;
+}
+
+textarea {
+  width: 72ch;
+  height: 25ch;
+  resize: none;
+  font-family: system-ui, sans-serif;
+  scrollbar-color: #252b3b transparent;
+  scrollbar-width: thin;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
