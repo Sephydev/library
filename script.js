@@ -59,6 +59,7 @@ function displayBooks() {
   myLibrary.forEach(book => {
     const card = document.createElement('div');
     card.classList.add("card")
+    card.setAttribute("data-id", book.id);
 
     const title = document.createElement('h2');
     title.textContent = book.title;
@@ -69,9 +70,18 @@ function displayBooks() {
     const synopsis = document.createElement('p');
     synopsis.textContent = book.synopsis;
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    
+    deleteBtn.addEventListener("click", (e) => {
+        const cardToRemove = document.querySelector(`[data-id='${book.id}']`);
+        cardToRemove.remove();
+    })
+
     card.appendChild(title);
     card.appendChild(info);
     card.appendChild(synopsis);
+    card.appendChild(deleteBtn);
 
     container.appendChild(card);
   })

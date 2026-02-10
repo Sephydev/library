@@ -36,11 +36,16 @@ body {
   max-width: 45ch;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   border-radius: 15px;
   padding: 1rem;
   box-shadow: 3px 3px 5px #00d4ff;
   transition: all .1s ease-in-out;
+}
+
+.card button {
+  margin: 0 auto;
 }
 
 .card span {
