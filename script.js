@@ -5,26 +5,43 @@ const closeDialogBtn = document.querySelector("#closeDialog");
 const addBookForm = document.querySelector("#addBookForm");
 const dialog = document.querySelector("dialog");
 
-function Book({ title, author, publicationDate, numOfPage, isRead, synopsis }) {
-  if (!new.target) {
-    throw Error("Please use 'new' with constructor");
+class Book {
+  #title;
+  #author;
+  #publicationDate;
+  #numOfPage;
+  #isRead;
+  #synopsis;
+  #id;
+
+  constructor({ title, author, publicationDate, numOfPage, isRead, synopsis }) {
+    this.#title = title;
+    this.#author = author;
+    this.#publicationDate = publicationDate;
+    this.#numOfPage = numOfPage;
+    this.#isRead = isRead;
+    this.#synopsis = synopsis;
+    this.#id = crypto.randomUUID();
   }
 
-  this.title = title;
-  this.author = author;
-  this.publicationDate = publicationDate;
-  this.numOfPage = numOfPage;
-  this.isRead = isRead;
-  this.synopsis = synopsis;
-  this.id = crypto.randomUUID();
-}
+  modifyIsRead() {
+    this.#isRead = !this.#isRead;
+  }
 
-Book.prototype.modifyIsRead = function () {
-  this.isRead = !this.isRead;
+  get book() {
+    return {
+      title: this.#title,
+      author: this.#author,
+      publicationDate: this.#publicationDate,
+      numOfPage: this.#numOfPage,
+      isRead: this.#isRead,
+      synopsis: this.#synopsis
+    }
+  }
 }
 
 function addBookToLibrary(book) {
-  const newBook = new Book(book);
+  const newBook = new Book(book).book;
   myLibrary.push(newBook);
 }
 
@@ -138,6 +155,7 @@ addBookForm.addEventListener("submit", (e) => {
 
   addBookToLibrary(newBook);
   displayBooks();
+  dialog.close();
 })
 
 displayBooks();
